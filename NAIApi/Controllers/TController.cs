@@ -4,7 +4,7 @@ using NAIApi.Models;
 
 namespace NAIApi.Controllers
 {
-    public abstract class TController<T> : ControllerBase where T : Entity
+    public abstract class TController<T> : ControllerBase where T : IdEntity
     {
         protected readonly TagContext Context;
 

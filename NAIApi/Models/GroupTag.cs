@@ -4,14 +4,14 @@ using Newtonsoft.Json;
 namespace NAIApi.Models;
 
 [JsonObject]
-public class GroupTag : Entity
+public class GroupTag : IdEntity
 {
     public int Order    { get; set; }
     public int Strength { get; set; }
 
     public                                             int   IdGroup { get; set; }
-    [JsonIgnore] [ForeignKey("IdGroup")] public virtual Group Group   { get; set; }
+    [JsonIgnore] public virtual Group Group   { get; set; }
 
     public                                            int IdTag { get; set; }
-    [JsonIgnore] [ForeignKey("IdTag")] public virtual Tag Tag   { get; set; }
+    [JsonIgnore] public virtual Tag Tag   { get; set; }
 }

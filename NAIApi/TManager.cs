@@ -8,7 +8,7 @@ namespace NAIApi
         {
             var hash = new HashCode();
             var type = source.GetType();
-            while (type != typeof(Entity))
+            while (type != typeof(IdEntity))
             {
                 foreach (var p in type.GetProperties())
                 {

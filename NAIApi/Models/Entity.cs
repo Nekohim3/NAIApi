@@ -4,17 +4,17 @@ using Newtonsoft.Json;
 namespace NAIApi.Models;
 
 [JsonObject]
-public class Entity
+public class IdEntity
 {
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
-    public static bool operator !=(Entity? a, Entity? b)
+    public static bool operator !=(IdEntity? a, IdEntity? b)
     {
         return !(a == b);
     }
 
-    public static bool operator ==(Entity? a, Entity? b)
+    public static bool operator ==(IdEntity? a, IdEntity? b)
     {
         if (a is null && b is null)
             return true;
@@ -25,12 +25,10 @@ public class Entity
 
     public override bool Equals(object? o)
     {
-        if (o is not Entity e)
+        if (o is not IdEntity e)
             return false;
         if (e.Id                   == 0 && Id == 0)
             return e.GetHashCode() == GetHashCode();
         return e.Id == Id;
     }
-
-    public override int GetHashCode() => this.GetHash();
 }
