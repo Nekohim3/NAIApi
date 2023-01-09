@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace NAIApi.Models;
 
 [JsonObject]
-public class IdEntity
+public abstract class IdEntity
 {
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }

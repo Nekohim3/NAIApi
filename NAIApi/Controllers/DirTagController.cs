@@ -5,7 +5,7 @@ namespace NAIApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class DirTagController : ManyToManyTController<DirTag>
+public class DirTagController : ManyToManyTController<DirTag, Dir, Tag>
 {
     public DirTagController(TagContext ctx) : base(ctx)
     {

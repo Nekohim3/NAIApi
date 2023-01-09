@@ -31,9 +31,9 @@ public class TagContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Dir>().HasOne(_ => _.ParentDir).WithMany(_ => _.Dirs).HasForeignKey(_ => _.IdParent);
-        modelBuilder.Entity<Dir>().HasMany(_ => _.Tags).WithMany(_ => _.Dirs).UsingEntity<DirTag>(x => x.HasOne(_ => _.Tag).WithMany(_ => _.DirTags).HasForeignKey(_ => _.TagsId),
-                                                                                                  x => x.HasOne(_ => _.Dir).WithMany(_ => _.DirTags).HasForeignKey(_ => _.DirsId),
-                                                                                                  x => x.HasKey(_ => new {_.DirsId, _.TagsId}));
+        modelBuilder.Entity<Dir>().HasMany(_ => _.Tags).WithMany(_ => _.Dirs).UsingEntity<DirTag>(x => x.HasOne(_ => _.Second).WithMany(_ => _.DirTags).HasForeignKey(_ => _.IdSecond),
+                                                                                                  x => x.HasOne(_ => _.First).WithMany(_ => _.DirTags).HasForeignKey(_ => _.IdFirst),
+                                                                                                  x => x.HasKey(_ => new {_.IdFirst, _.IdSecond }));
         //base.OnModelCreating(modelBuilder); 
         //modelBuilder.Entity<Dir>().Ignore(_ => _.Dirs).Ignore(_ => _.Tags);
     }
