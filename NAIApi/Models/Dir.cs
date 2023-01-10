@@ -13,7 +13,7 @@ public class Dir : IdEntity
     public int? IdParent { get; set; }
 
     public virtual Dir? ParentDir { get; set; }
-
+    
     public virtual ICollection<Dir>? Dirs { get; set; }
     public virtual ICollection<Tag>? Tags { get; set; }
     public virtual List<DirTag>? DirTags { get; set; }

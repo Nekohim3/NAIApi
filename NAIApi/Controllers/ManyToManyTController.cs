@@ -20,6 +20,30 @@ public abstract class ManyToManyTController<T,T1,T2> : ControllerBase where T1 :
         return Ok(lst);
     }
 
+    [HttpGet]
+    [Route("ByFirst/{id}")]
+    public virtual async Task<IActionResult> GetByFirst(int id)
+    {
+        var lst = await Context.Set<T>().Where(_ => _.IdFirst == id).ToListAsync();
+        return Ok(lst);
+    }
+
+    [HttpGet]
+    [Route("BySecond/{id}")]
+    public virtual async Task<IActionResult> GetBySecond(int id)
+    {
+        var lst = await Context.Set<T>().Where(_ => _.IdSecond == id).ToListAsync();
+        return Ok(lst);
+    }
+
+    [HttpGet]
+    [Route("ByBoth/{idFirst}/{idSecond}")]
+    public virtual async Task<IActionResult> GetByBoth(int idFirst, int idSecond)
+    {
+        var lst = await Context.Set<T>().Where(_ => _.IdFirst == idFirst && _.IdSecond == idSecond).ToListAsync();
+        return Ok(lst);
+    }
+
     [HttpDelete]
     public virtual async Task<IActionResult> Delete(T t)
     {

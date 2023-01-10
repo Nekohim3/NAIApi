@@ -19,10 +19,10 @@ namespace NAIApi.Controllers
             var lst = await Context.Set<T>().AsNoTracking().ToListAsync();
             return Ok(lst);
         }
-
+        
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public virtual async Task<IActionResult> Get(int id)
         {
             var t = await Context.Set<T>().AsNoTracking().SingleOrDefaultAsync(_ => _.Id == id);
             if (t == null)
@@ -31,7 +31,7 @@ namespace NAIApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(T t)
+        public virtual async Task<IActionResult> Create(T t)
         {
             Context.Add(t);
             await Context.SaveChangesAsync();
@@ -40,7 +40,7 @@ namespace NAIApi.Controllers
 
         [HttpPost]
         [Route("Bulk")]
-        public async Task<IActionResult> Create(List<T> tList)
+        public virtual async Task<IActionResult> Create(List<T> tList)
         {
             Context.AddRange(tList);
             await Context.SaveChangesAsync();
@@ -48,7 +48,7 @@ namespace NAIApi.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(T t)
+        public virtual async Task<IActionResult> Update(T t)
         {
             Context.Update(t);
             await Context.SaveChangesAsync();
@@ -57,7 +57,7 @@ namespace NAIApi.Controllers
 
         [HttpPut]
         [Route("Bulk")]
-        public async Task<IActionResult> Update(List<T> tList)
+        public virtual async Task<IActionResult> Update(List<T> tList)
         {
             Context.UpdateRange(tList);
             await Context.SaveChangesAsync();
@@ -65,7 +65,7 @@ namespace NAIApi.Controllers
         }
 
         [HttpPatch]
-        public async Task<IActionResult> Save(T t)
+        public virtual async Task<IActionResult> Save(T t)
         {
             if (t.Id == 0)
                 Context.Add(t);
@@ -77,7 +77,7 @@ namespace NAIApi.Controllers
 
         [HttpPatch]
         [Route("Bulk")]
-        public async Task<IActionResult> Save(List<T> tList)
+        public virtual async Task<IActionResult> Save(List<T> tList)
         {
             var forAdd  = tList.Where(_ => _.Id == 0).ToList();
             var forSave = tList.Where(_ => _.Id != 0).ToList();
@@ -89,7 +89,7 @@ namespace NAIApi.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public virtual async Task<IActionResult> Delete(int id)
         {
             var t = await Context.Set<T>().FindAsync(id);
             if (t == null)
@@ -101,7 +101,7 @@ namespace NAIApi.Controllers
 
         [HttpDelete]
         [Route("Bulk")]
-        public async Task<IActionResult> Delete(List<int> ids)
+        public virtual async Task<IActionResult> Delete(List<int> ids)
         {
             var t = await Context.Set<T>().Where(_ => ids.Contains(_.Id)).ToListAsync();
             if (t.Count != ids.Count)
@@ -113,7 +113,7 @@ namespace NAIApi.Controllers
 
         [HttpGet]
         [Route("EnsureDeleted")]
-        public void EnsureDeleted()
+        public virtual void EnsureDeleted()
         {
             new TagContext(true);
         }
