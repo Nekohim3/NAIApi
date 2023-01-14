@@ -14,17 +14,35 @@ public class TagContext : DbContext
     public DbSet<GroupTag> GroupTags { get; set; }
     public DbSet<DirTag>   DirTag    { get; set; }
 
+    public bool      IsValid   { get; set; }
+    public Exception Exception { get; set; }
+
     public TagContext(bool resetDatabase = false)
     {
-        if (resetDatabase)
-            Database.EnsureDeleted();
+        try
+        {
+            if (resetDatabase)
+                Database.EnsureDeleted();
 
-        Database.EnsureCreated();
+            Database.EnsureCreated();
+            IsValid = true;
+        }
+        catch (Exception e)
+        {
+            IsValid   = false;
+            Exception = e;
+        }
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=NovelAIHelper;Username=postgres;Password=KuroNeko2112@");
+        if (g.DatabaseSettings == null)
+            return;
+        optionsBuilder.UseNpgsql($"Host={g.DatabaseSettings.DatabaseHost};"         +
+                                 $"Port={g.DatabaseSettings.DatabasePort};"         +
+                                 $"Database={g.DatabaseSettings.DatabaseName};"     +
+                                 $"Username={g.DatabaseSettings.DatabaseUsername};" +
+                                 $"Password={g.DatabaseSettings.DatabasePassword}");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

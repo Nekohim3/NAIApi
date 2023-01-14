@@ -16,6 +16,8 @@ namespace NAIApi.Controllers
         [HttpGet]
         public virtual async Task<IActionResult> Get()
         {
+            if (g.DatabaseSettings == null || !Context.IsValid)
+                return Problem("Empty api config");
             var lst = await Context.Set<T>().AsNoTracking().ToListAsync();
             return Ok(lst);
         }
@@ -24,6 +26,8 @@ namespace NAIApi.Controllers
         [Route("{id}")]
         public virtual async Task<IActionResult> Get(int id)
         {
+            if (g.DatabaseSettings == null || !Context.IsValid)
+                return Problem("Empty api config");
             var t = await Context.Set<T>().AsNoTracking().SingleOrDefaultAsync(_ => _.Id == id);
             if (t == null)
                 return NotFound();
@@ -33,6 +37,8 @@ namespace NAIApi.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Create(T t)
         {
+            if (g.DatabaseSettings == null || !Context.IsValid)
+                return Problem("Empty api config");
             Context.Add(t);
             await Context.SaveChangesAsync();
             return Ok(t);
@@ -42,6 +48,8 @@ namespace NAIApi.Controllers
         [Route("Bulk")]
         public virtual async Task<IActionResult> Create(List<T> tList)
         {
+            if (g.DatabaseSettings == null || !Context.IsValid)
+                return Problem("Empty api config");
             Context.AddRange(tList);
             await Context.SaveChangesAsync();
             return Ok(tList);
@@ -50,6 +58,8 @@ namespace NAIApi.Controllers
         [HttpPut]
         public virtual async Task<IActionResult> Update(T t)
         {
+            if (g.DatabaseSettings == null || !Context.IsValid)
+                return Problem("Empty api config");
             Context.Update(t);
             await Context.SaveChangesAsync();
             return Ok(t);
@@ -59,6 +69,8 @@ namespace NAIApi.Controllers
         [Route("Bulk")]
         public virtual async Task<IActionResult> Update(List<T> tList)
         {
+            if (g.DatabaseSettings == null || !Context.IsValid)
+                return Problem("Empty api config");
             Context.UpdateRange(tList);
             await Context.SaveChangesAsync();
             return Ok(tList);
@@ -67,6 +79,8 @@ namespace NAIApi.Controllers
         [HttpPatch]
         public virtual async Task<IActionResult> Save(T t)
         {
+            if (g.DatabaseSettings == null || !Context.IsValid)
+                return Problem("Empty api config");
             if (t.Id == 0)
                 Context.Add(t);
             else
@@ -79,6 +93,8 @@ namespace NAIApi.Controllers
         [Route("Bulk")]
         public virtual async Task<IActionResult> Save(List<T> tList)
         {
+            if (g.DatabaseSettings == null || !Context.IsValid)
+                return Problem("Empty api config");
             var forAdd  = tList.Where(_ => _.Id == 0).ToList();
             var forSave = tList.Where(_ => _.Id != 0).ToList();
             Context.AddRange(forAdd);
@@ -91,6 +107,8 @@ namespace NAIApi.Controllers
         [Route("{id}")]
         public virtual async Task<IActionResult> Delete(int id)
         {
+            if (g.DatabaseSettings == null || !Context.IsValid)
+                return Problem("Empty api config");
             var t = await Context.Set<T>().FindAsync(id);
             if (t == null)
                 return NotFound();
@@ -103,6 +121,8 @@ namespace NAIApi.Controllers
         [Route("Bulk")]
         public virtual async Task<IActionResult> Delete(List<int> ids)
         {
+            if (g.DatabaseSettings == null || !Context.IsValid)
+                return Problem("Empty api config");
             var t = await Context.Set<T>().Where(_ => ids.Contains(_.Id)).ToListAsync();
             if (t.Count != ids.Count)
                 return NotFound();
@@ -111,11 +131,11 @@ namespace NAIApi.Controllers
             return Ok(true);
         }
 
-        [HttpGet]
-        [Route("EnsureDeleted")]
-        public virtual void EnsureDeleted()
-        {
-            new TagContext(true);
-        }
+        //[HttpGet]
+        //[Route("EnsureDeleted")]
+        //public virtual void EnsureDeleted()
+        //{
+        //    new TagContext(true);
+        //}
     }
 }
