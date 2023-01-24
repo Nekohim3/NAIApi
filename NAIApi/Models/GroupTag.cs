@@ -10,8 +10,8 @@ public class GroupTag : IdEntity
     public int Strength { get; set; }
 
     public                                             int   IdGroup { get; set; }
-    [JsonIgnore] public virtual Group Group   { get; set; }
+    public virtual Group Group   { get; set; }
 
     public                                            int IdTag { get; set; }
-    [JsonIgnore] public virtual Tag Tag   { get; set; }
+    public virtual Tag Tag   { get; set; }
 }

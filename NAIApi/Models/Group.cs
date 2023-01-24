@@ -11,7 +11,7 @@ public class Group : IdEntity
     public string? Note  { get; set; }
 
     public                                                int     IdSession { get; set; }
-    [JsonIgnore] public virtual Session Session   { get; set; }
+    public virtual Session Session   { get; set; }
 
     public virtual ICollection<GroupTag> GroupTags { get; set; }
 }

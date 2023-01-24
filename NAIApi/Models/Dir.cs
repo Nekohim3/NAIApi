@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Newtonsoft.Json;
 
 namespace NAIApi.Models;
@@ -11,7 +12,7 @@ public class Dir : IdEntity
     public string? Note { get; set; }
 
     public int? IdParent { get; set; }
-
+    
     public virtual Dir? ParentDir { get; set; }
     
     public virtual ICollection<Dir>? Dirs { get; set; }

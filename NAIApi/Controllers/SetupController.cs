@@ -45,4 +45,10 @@ public class SetupController : ControllerBase
             return BadRequest($"Invalid database params\n{string.Join("\n", ctx.Exception.FromChain(_ => _.InnerException).Select(_ => _.Message))}");
         }
     }
+    [HttpGet]
+    [Route("EnsureDeleted")]
+    public virtual void EnsureDeleted()
+    {
+        new TagContext(true);
+    }
 }
